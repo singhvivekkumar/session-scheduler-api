@@ -8,5 +8,16 @@
   },
   "author": "Vivek Kumar Singh",
   "license": "ISC",
-  "dependencies": {}
+  "keywords": [
+    "scheduling",
+    "calendar",
+    "appointment",
+    "booking",
+    "appointment-scheduling",
+    "appointment-management-system",
+    "appointment-scheduler",
+    "appointment-api",
+    "calendly",
+    "cal.com"
+  ]
 }

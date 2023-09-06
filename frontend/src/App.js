@@ -1,12 +1,9 @@
 import "./App.css";
+import Body from "./components/Body";
 
 function App() {
 	return (
-		<div className=" ">
-			<header className=" text-lg bg-red-400">
-				get the session
-			</header>
-		</div>
+		<Body/>
 	);
 }
 

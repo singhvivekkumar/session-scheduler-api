@@ -1,6 +1,7 @@
 # Get The Session
-
 ---
+
+
 ## Creation of Project
 - Firstly, I create a repository by the name of get me session means `appointment scheduling 	application` then I had initialized  `npm init` in cmd. After that two more folder are created 	in which one for backend(api) or `node` and another frontend or `react`.
 
@@ -17,7 +18,7 @@
 - After this create folder `config` in which create a file `server-config.js`
 - Add the following code:
 ```
-	const dotenv = require('dotenv');
+const dotenv = require('dotenv');
 
 dotenv.config({});
 
@@ -44,7 +45,8 @@ I move to connect the app with googleapis for calender details and their feature
 	* Set the redirect `url` which can be default.
 	* Copy the `CLIENT_ID`, `CLIENT_SECRET` and `REDIRECT`.
 	* Paste all these in .env file.
-
+	
+- for more details [Google calendar API](https://developers.google.com/calendar/api/quickstart/nodejs)
 ### love
 
 ** vivek **

@@ -1,10 +1,9 @@
 const express = require('express');
-const CalenderController = require('../controllers/calender-controller');
-const RedirectController = require('../controllers/redirect-controller');
+const {getCalender, redirect} = require('../controllers/calender-controller');
 
 const router = express.Router();
 
-router.get('/google', CalenderController.getCalender);
-router.get('/google/redirect', RedirectController.redirect);
+router.get('/calendar', getCalender);
+router.get('/calendar/redirect', redirect);
 
 module.exports = router;
