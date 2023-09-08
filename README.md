@@ -33,7 +33,7 @@ module.exports = {
 
 ### Create Google Credentials
 I move to connect the app with googleapis for calender details and their features which help our scheduling app.
-
+![Alt text](image.png)
 - Run the following command to install `googleapis`.
 ```npm install googleapis```
 
@@ -45,6 +45,7 @@ I move to connect the app with googleapis for calender details and their feature
 	* Set the redirect `url` which can be default.
 	* Copy the `CLIENT_ID`, `CLIENT_SECRET` and `REDIRECT`.
 	* Paste all these in .env file.
+	* Authorization details [Oauth2](https://developers.google.com/identity/protocols/oauth2/web-server#node.js).
 	
 - for more details [Google calendar API](https://developers.google.com/calendar/api/quickstart/nodejs)
 ### love

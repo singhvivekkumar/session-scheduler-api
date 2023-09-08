@@ -1,6 +1,6 @@
 const { google } = require('googleapis');
 const axios = require('axios');
-const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL} = require('../config/server-config');
+const { CLIENT_ID, CLIENT_SECRET, REDIRECT_URL, API_KEY} = require('../config/server-config');
 
 const oauth2Client = new google.auth.OAuth2(
 	CLIENT_ID ,
@@ -34,18 +34,22 @@ const getCalender = async (req, res) => {
 const redirect = async ( req, res) => {
 	try {
 		const code = await req.query.code;
-		console.log(code)
-		const user_info = await axios.get("http://www.googleapis.com/oauth2/v3/tokeninfo?id_token=" + code);
-		const data = user_info.json();
-		console.log(data);
-		return res.send("it is not working properly")
+		const { tokens } = await oauth2Client.getToken(code);
+		oauth2Client.setCredentials(tokens);
+
+		return res.send({
+			message: "You have successfully logged in",
+			success: true,
+		})
 	} catch (error) {
-		console.log("something went wrong in redirect",req)
+		console.log("something went wrong in redirecting phase",req)
 		return res.send(error)
 	}
 }
 
+
 module.exports = {
 	getCalender,
-	redirect
+	redirect,
+	oauth2Client
 }
