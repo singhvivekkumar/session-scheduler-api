@@ -1,17 +1,37 @@
 import { Link } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
+import axios from "axios";
 
 const LoadingPage = () => {
-	const handleAuthentication = async () => {
-		const response = await fetch("/api/calendar", {
-			method: "GET",
-			mode: "cors",
-			credentials: "same-origin",
-			redirect: "follow",
-		});
-		const data = await response.json();
-		console.log(data);
+
+	const handleAuthentication = () => {
+		console.log("clicked");
+		axios
+			.get("http://localhost:3002/api/calendar")
+			.then((response) => {
+				const authUrl = response.data;
+				window.location = authUrl;
+			})
+			.catch((error) => {
+				if (error.response) {
+					console.log(error.response.data);
+					console.log(error.response.status);
+					console.log(error.response.headers);
+				} else if (error.request) {
+					console.log(error.request);
+				} else {
+					console.log("Error", error.message);
+				}
+				console.log(error.config);
+			})
+			.finally(()=> {
+				console.log("finally");
+			});
+
+			
 	};
+
+	
 
 	return (
 		<div className=" flex flex-col justify-center items-center">

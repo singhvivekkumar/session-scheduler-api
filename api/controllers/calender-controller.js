@@ -19,7 +19,7 @@ const getCalender = async (req, res) => {
 			scope: scopes,
 		});
 
-		return res.redirect(url);
+		return res.send(url);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({
