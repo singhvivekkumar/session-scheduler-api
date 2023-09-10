@@ -4,6 +4,7 @@ import { createBrowserRouter, Outlet, RouterProvider } from "react-router-dom";
 import LoadingPage from "./consultant/LoadingPage";
 import MainContainer from "./consultant/MainContainer";
 import Error from "../Error";
+import CreateEvent from "./consultant/CreateEvent";
 
 const AppLayout = () => {
 	return (
@@ -29,6 +30,10 @@ const Body = () => {
 					path: "/main",
 					element: <MainContainer/>,
 				},
+				{
+					path: "/createEvent",
+					element: <CreateEvent/>
+				}
 			],
 		},
 	]);
