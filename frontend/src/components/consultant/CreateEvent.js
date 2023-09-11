@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
+import Booked from "./Booked";
 
 const CreateEvent = () => {
+	const [successFull, setSuccessFull] = useState(false);
+
 	const initialValues = {
 		name: "",
 		summary: "",
@@ -15,7 +18,10 @@ const CreateEvent = () => {
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().min(3, "Too Short!").max(70, "Too Long!").required(),
 		location: Yup.string().required(),
-		summary: Yup.string().min(10, 'Too Short!').max(1000, 'Too Long!').required(),
+		summary: Yup.string()
+			.min(10, "Too Short!")
+			.max(1000, "Too Long!")
+			.required(),
 		startDateTime: Yup.string().required(),
 		endDateTime: Yup.string().required(),
 	});
@@ -23,10 +29,11 @@ const CreateEvent = () => {
 	const handleSubmit = (values, helpers) => {
 		axios
 			.post("http://localhost:3002/api/calendar/create-event", values)
-			.then( (response) => {
-				console.log(response.data)
+			.then((response) => {
+				console.log(response.data);
+				setSuccessFull(response.data.status === 200 ? true : false);
 			})
-			.catch((error) => console.log(error.message))
+			.catch((error) => console.log(error.message));
 		console.log(values);
 	};
 
@@ -34,7 +41,9 @@ const CreateEvent = () => {
 		<input className="" type="datetime-local" {...props} />
 	);
 
-	return (
+	return successFull ? (
+		<Booked />
+	) : (
 		<div className=" flex flex-col justify-center bg-slate-100 max-h-full ">
 			<div className="flex flex-col justify-center py-4 bg-white  border-b shadow-md">
 				<h1 className=" text-xl md:text-3xl font-semibold text-center ">

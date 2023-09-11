@@ -5,6 +5,7 @@ import LoadingPage from "./consultant/LoadingPage";
 import MainContainer from "./consultant/MainContainer";
 import Error from "../Error";
 import CreateEvent from "./consultant/CreateEvent";
+import ViewEvents from "./consultant/ViewEvents";
 
 const AppLayout = () => {
 	return (
@@ -25,10 +26,17 @@ const Body = () => {
 				{
 					path: "/",
 					element: <LoadingPage />,
+					
 				},
 				{
 					path: "/main",
 					element: <MainContainer/>,
+					children: [
+						{
+							path: "/main",
+							element:<ViewEvents/>
+						}
+					]
 				},
 				{
 					path: "/createEvent",
