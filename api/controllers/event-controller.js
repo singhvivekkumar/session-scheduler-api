@@ -95,10 +95,15 @@ const getEvent = async (req, res) => {
 			calendarId: "primary",
 			timeZone: "Asia/Kolkata"
 		})
-		console.log(response.data)
+		// console.log(response.data)
 		res.send(response);
 	} catch (error) {
 		console.log(error.message);
+		res.send({
+			success: false,
+			message: "problem getEvent() controller",
+			error: error,
+		});
 	}
 };
 
@@ -107,14 +112,34 @@ const updateEvent = async (req, res) => {
 		console.log("event is ");
 	} catch (error) {
 		console.log(error.message);
+		res.send({
+			success: false,
+			message: "problem updateEvent() controller",
+			error: error,
+		});
 	}
 };
 
 const deleteEvent = async (req, res) => {
 	try {
-		console.log("event is ");
+		await settingTokens();
+		const { eventId } = await req.params ;
+		// console.log("params : ", req.params,req);
+		console.log("params : ", req.params);
+		const response = await calendar.events.delete({
+			auth:oauth2Client,
+			calendarId: "primary",
+			eventId: eventId,
+		})
+		console.log("deleted");
+		res.send(response);
 	} catch (error) {
 		console.log(error.message);
+		res.send({
+			success: false,
+			message: "problem deleteEvent() controller",
+			error: error,
+		});
 	}
 };
 module.exports = {
