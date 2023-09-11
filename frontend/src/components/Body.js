@@ -6,6 +6,7 @@ import MainContainer from "./consultant/MainContainer";
 import Error from "../Error";
 import CreateEvent from "./consultant/CreateEvent";
 import ViewEvents from "./consultant/ViewEvents";
+import UserView from "./User/UserView";
 
 const AppLayout = () => {
 	return (
@@ -44,6 +45,16 @@ const Body = () => {
 				}
 			],
 		},
+		{
+			path: "/singhvivek309",
+			element: <UserView/>,
+			children: [
+				{
+					path: "/singhvivek309",
+				}
+			]
+
+		}
 	]);
 	return (
 		<div>

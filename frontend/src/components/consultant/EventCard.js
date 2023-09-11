@@ -19,7 +19,7 @@ const EventCard = ({ props }) => {
 
 	return (
 		<div class="max-w-md w-1/4 p-6 bg-white rounded-lg shadow-lg ">
-			<h1 class="text-2xl font-semibold text-left text-gray-500 mt-8 mb-6">
+			<h1 class="text-xl font-semibold text-left text-gray-500 mt-8 mb-6">
 				{props?.summary}
 			</h1>
 			<p class="text-sm text-gray-600 text-justify mt-8 mb-6">

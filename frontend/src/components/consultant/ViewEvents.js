@@ -14,7 +14,7 @@ const ViewEvents = () => {
 		await axios
 			.get("http://localhost:3002/api/calendar/list-event")
 			.then((response) => {
-				console.log("by api",response?.data?.data?.items);
+				// console.log("by api",response?.data?.data?.items);
 				setListAllEvents(response?.data?.data?.items);
 				console.log("state",listAllEvents)
 			})
@@ -22,7 +22,7 @@ const ViewEvents = () => {
 	};
 
 	return listAllEvents?.length === 0 ? null : (
-		<div className=" bg-slate-100 flex flex-col md:flex-row flex-wrap justify-center items-baseline space-y-6 px-4 space-x-10 ">
+		<div className=" bg-slate-100 flex flex-col md:flex-row flex-wrap justify-evenly space-y-6 md:px-10 p-4 items-baseline space-x-1 ">
 			{listAllEvents?.map((item) => {
 				return <EventCard key={item?.id} props={item} />;
 			})}

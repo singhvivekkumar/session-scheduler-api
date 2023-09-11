@@ -8,7 +8,7 @@ const { findUser } = require("../models/events");
 
 const settingTokens = async () => {
 	const user = await findUser(CLIENT_ID);
-	console.log(user[0].refresh_token);
+	// console.log(user[0].refresh_token);
 
 	oauth2Client.setCredentials({
 		refresh_token: user[0].refresh_token,
