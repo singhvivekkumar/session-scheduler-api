@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import EventCard from "./EventCard";
 import axios from "axios";
+import { BACKEND_URI } from "../../utils/constant";
 
 const ViewEvents = () => {
 	const [listAllEvents, setListAllEvents] = useState([]);
@@ -12,7 +13,7 @@ const ViewEvents = () => {
 
 	const ListEvents = async () => {
 		await axios
-			.get("http://localhost:3002/api/calendar/list-event")
+			.get(BACKEND_URI+"/api/calendar/list-event")
 			.then((response) => {
 				// console.log("by api",response?.data?.data?.items);
 				setListAllEvents(response?.data?.data?.items);

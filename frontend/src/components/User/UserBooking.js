@@ -3,6 +3,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import ConfirmEmail from "./ConfirmEmail";
+import { BACKEND_URL } from "../../utils/constant";
 
 const UserBooking = () => {
 	const [successFull, setSuccessFull] = useState(false);
@@ -23,8 +24,9 @@ const UserBooking = () => {
 	});
 
 	const handleSubmit = (values, helpers) => {
+		console.log("values : ",values)
 		axios
-			.post("http://localhost:3002/api/calendar/create-event", values)
+			.patch(BACKEND_URL+"/api/calendar/update-event", values)
 			.then((response) => {
 				console.log(response.data);
 				setSuccessFull(response.data.status === 200 ? true : false);

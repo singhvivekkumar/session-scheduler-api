@@ -46,13 +46,8 @@ const Body = () => {
 			],
 		},
 		{
-			path: "/singhvivek309",
+			path: "/singhvivek309/:id",
 			element: <UserView/>,
-			children: [
-				{
-					path: "/singhvivek309",
-				}
-			]
 
 		}
 	]);

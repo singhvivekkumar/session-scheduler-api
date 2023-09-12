@@ -109,8 +109,14 @@ const getEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
 	try {
-		console.log("event is ");
-	} catch (error) {
+		await settingTokens();
+		const response = await calendar.events.list({
+			auth: oauth2Client,
+			calendarId: "primary",
+			timeZone: "Asia/Kolkata"
+		})
+		// console.log(response.data)
+		res.send(response);	} catch (error) {
 		console.log(error.message);
 		res.send({
 			success: false,
@@ -142,6 +148,7 @@ const deleteEvent = async (req, res) => {
 		});
 	}
 };
+
 module.exports = {
 	createEvent,
 	getEvent,
