@@ -7,9 +7,9 @@ const UserView = () => {
 			{/* main contianer */}
 			<div className=" flex justify-center items-center bg-slate-100 h-screen ">
 				{/* container */}
-				<div className=" flex flex-col rounded-md w-10/12 lg:w-2/3 lg:h-3/4 lg:flex-row p-4 md:py-10 lg:px-10 bg-white shadow-md border border-slate-300 lg:space-x-4 ">
+				<div className=" flex flex-col rounded-md md:w-10/12 lg:w-2/3 h-3/4 lg:flex-row p-4 md:py-10 lg:px-10 bg-white shadow-md border space-y-4 border-slate-300 lg:space-x-4 ">
 					{/* section 1st details side */}
-					<div className=" flex flex-col w-1/3 space-y-2 ">
+					<div className=" flex flex-col lg:w-1/3 space-y-2 ">
 						<p className=" text-slate-600 text-xl font-medium text-left ">
 							Auther Name
 						</p>
@@ -27,11 +27,11 @@ const UserView = () => {
 						</div>
 					</div>
 					{/* section 2nd calendar */}
-					<div className=" flex flex-col justify-center w-2/3">
+					<div className=" flex flex-col max-h-fit lg:w-2/3">
 						<h2 className=" text-xl font-semibold text-center text-slate-800 ">
 							Select Date Time
 						</h2>
-						<div className=" w-3/4">
+						<div className=" w-full lg:w-4/5">
 							{/* <input
 								type="datetime-local"
 								id="meeting-time"

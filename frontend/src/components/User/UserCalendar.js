@@ -15,8 +15,9 @@ import axios from "axios";
 // ];
 
 const UserCalendar = () => {
-	const [weekendsVisible] = useState(false);
+	// const [weekendsVisible] = useState(false);
 	const [currentEvents, setCurrentEvents] = useState([]);
+	let events;
 
 	const handleDateSelect = (arg) => {
 		console.log(arg);
@@ -29,35 +30,37 @@ const UserCalendar = () => {
 	// 	console.log(arg);
 	// };
 
-	useEffect( ()=> {
+	useEffect(() => {
 		ListEvents();
-	// eslint-disable-next-line react-hooks/exhaustive-deps
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const ListEvents = async () => {
 		await axios
 			.get("http://localhost:3002/api/calendar/list-event")
 			.then((response) => {
-				console.log("by api",response?.data?.data?.items);
+				console.log("by api", response?.data?.data?.items);
 				setCurrentEvents(response?.data?.data?.items);
-				console.log("state",currentEvents)
+				console.log("state", currentEvents);
 			})
 			.catch((error) => console.log(error.message));
 	};
 
 	if (currentEvents.length === 0) {
-		console.log("state",currentEvents)
+		console.log("state", currentEvents);
 		return null;
+	} else {
+		events = [
+			{
+				id: currentEvents[11].id,
+				title: currentEvents[11].summary,
+				start: currentEvents[11].start.dateTime,
+				end: currentEvents[11].end.dateTime, 
+			},
+		];
 	}
 
-	const events = {
-		// this object will be "parsed" into an Event Object
-		id: currentEvents[10].id ,
-		title: currentEvents[10].summary, // a property!
-		start: currentEvents[10].start.dateTime, // a property!
-		end: currentEvents[10].end.dateTime, // a property!
-		 // a property! ** see important note below about 'end' **
-	};
+	
 
 	return (
 		<FullCalendar
@@ -69,14 +72,14 @@ const UserCalendar = () => {
 			}}
 			initialView="dayGridMonth"
 			// timeZone="local"
-			// editable={true}
-			eventAdd={events}
+			editable={true}
+			events={events}
 			selectable={true}
 			// selectMirror={true}
-			dayMaxEvents={true}
-			weekends={weekendsVisible}
+			// dayMaxEvents={true}
+			// weekends={weekendsVisible}
 			// initialEvents={INITIAL_EVENTS} // alternatively, use the `events` setting to fetch from a feed
-			select={handleDateSelect}
+			// select={handleDateSelect}
 			// eventContent={renderEventContent} // custom render function
 			// eventClick={handleEventClick}
 			// eventsSet={handleEvents} // called after events are initialized/added/changed/removed
