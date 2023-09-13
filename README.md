@@ -45,20 +45,13 @@ You need the back-end server for this app to work. You can find the intructions 
 - **Setup the Google Developer Console**: main module to interact with Google Calendar API that provides an abstraction with business logic.
 - **Backend**: a express server which exposes the API
 - **frontend**: a React application written in javascript! It relies on well known frameworks like TaislwindCSS, formik and react router.
-- **webapp-bundle**: the backend module, bundled with the frontend module as Java resources. This should be your entry point if you want to run the app as a standalone whole
 
 ### Installation
 
-1. Clone the repo
+* Clone the repo
 
     ```sh
     git clone https://github.com/singhvivekkumar/session-scheduler.git
-    ```
-
-2. Install NPM packages in `backend
-
-    ```sh
-    npm install
     ```
 
 3. Start local server
@@ -105,36 +98,30 @@ You need the back-end server for this app to work. You can find the intructions 
     1. Pick *Web Application*
     2. In 
     1. In **Authorized JavaScript origins** section add this for dev localhost server:
-        - `http://localhost:300` for frontend server.
+        - `http://localhost:3000` for frontend server.
     1. In **Authorized redirect URIs** section add this for dev localhost server:
         - `http://localhost:3002/api/calendar/redirect` for backend dev server
         - *(your production servers here)*
     1. Confirm it. You can let *allowed redirect URIs* empty. We will be using Google's own sign in.
     1. Take note of your **OAuth Client ID**
     1. Store the Client Id *(one of)*:
-        - Set an Environment Variable called `GOOGLE_CLIENT_ID` with the value
-        - Save it on `model` module's root under with name `google_client_id.txt`.
-        - Or replace the `buildConfigField:API_CLIENT_ID` value on `model` module's `build.gradle.kts` file.
-1. Create a new (Google Calendar)[https://calendar.google.com/calendar/r/settings/createcalendar]
-    1. Share it with the **Service Account's email address** you just created. This will make it available at the app
-    1. Make sure it has **write access** to the Calendar's events when you share it
-1. Run the `backend` or the `webapp-bundle` module to check if everything is working as expected.
+        - Set an Environment Variable called `CLIENT_ID` with the value
+        - Set an Environment Variable called `CLIENT_SECRET` with the value
+        - Set an Environment Variable called `REDIRECT_URL` with the value
+        - Save it on `.env` file.
+### Setup MongoDB
+1. Create a MongoDB Atlas account. You can create an account for free at https://www.mongodb.com/cloud/atlas/signup.
+2. Create a cluster. A cluster is a group of MongoDB servers that work together to provide high availability and scalability. You can create a cluster in the MongoDB Atlas console.
+3. Connect to your cluster. You can connect to your cluster using the MongoDB Compass GUI or the MongoDB command-line tools.
+4. Setup mongoDB with express js [visit](https://www.mongodb.com/languages/express-mongodb-rest-api-tutorial)
 
-If succeed, you should see something like this at http://localhost:8081/api/agendas:
+If succeed, you should see something like this at http://localhost:3002/api/calendar:
 ```json
 [
   {
     "id": "fsltp4vi7lcgugho31rdlc56no@group.calendar.google.com",
     "name": "Beneficios (prueba)",
     "description": "Calendario de prueba para la app de citas",
-    "foregroundColor": "#000000",
-    "backgroundColor": "#a47ae2",
-    "available": true
-  },
-  {
-    "id": "fpjlv6afhup6s03v5gt3ljgd74@group.calendar.google.com",
-    "name": "Masajes (prueba)",
-    "description": "Beneficio de masajes",
     "foregroundColor": "#000000",
     "backgroundColor": "#a47ae2",
     "available": true
@@ -145,143 +132,57 @@ If succeed, you should see something like this at http://localhost:8081/api/agen
 I encourge you to create new calendars from https://calendar.google.com and add some test events on it!
 
 ### Running the backend
-```sh
-./gradlew backend:run
-```
-Once running:
-- visit https://petstore.swagger.io/?url=http://localhost:8081/api/openapi.json to explore the API
+* Go to `api` folder of session-schedular by: 
+    ```sh
+    cd api
+    ```
+* create new `.env` file to `api` folder
+* Add the following environments variable to `.env` file of `api` folder
+    ```
+    PORT=3002
+    CLIENT_ID= <YOUR_GOOGLE_CLIENT_ID>  
+    CLIENT_SECRET=<YOUR_GOOGLE_SECRET_ID>
+    REDIRECT_URL=http://localhost:3002/api/calendar/redirect
+    API_KEY=A<YOUR_GOOGLE_API_KEY>
+    MONGODB_URI="mongodb+srv://<YOUR_MONDODB_USER_ID>:<YOUR_MONGODB_PASSWORD>@cluster0.gjor0co.mongodb.net/?retryWrites=true&w=majority"
 
-### Running the frontend (as standalone, for dev purposes)
-```sh
-./gradlew frontend:run -t -PapiEndpoint=http://localhost:8081/api
-```
-Once running, visit http://localhost:8088/ to open the app
+    ```
+* Install the dependencies and devDependencies and start the server
+* Install NPM packages in `api`
 
-### Running the whole webapp (frontend and backend)
-```sh
-./gradlew webapp-bundle:run
-```
+    ```sh
+    npm install
+    ```
+    ```sh
+    npm start
+    ```
 Once running:
-- visit http://localhost:8081 to open the app 
-- visit https://petstore.swagger.io/?url=http://localhost:8081/api/openapi.json to explore the API
+- visit http://localhost:3002/api/calender/redirect to explore the API
+
+### Running the frontend 
+* Go to `frontend` folder of session-schedular by:
+    ```sh
+    cd frontend
+    ```
+* Install the dependencies and devDependencies and start the server
+* Install NPM packages in `api`
+    ```sh
+    npm install
+    ```
+    ```sh
+    npm start
+    ```
+Once running, visit http://localhost:3000/ to open the app
 
 Note: it may take a while to build, basically because it need to build and bundle the *frontend* module as well.
+.
 
----
----
----
+> Note:
 
-Dillinger requires [Node.js](https://nodejs.org/) v10+ to run.
-
-Install the dependencies and devDependencies and start the server.
-
-```sh
-cd dillinger
-npm i
-node app
-```
-
-For production environments...
-
-```sh
-npm install --production
-NODE_ENV=production node app
-```
-
-## Plugins
-
-Dillinger is currently extended with the following plugins.
-Instructions on how to use them in your own application are linked below.
-
-| Plugin | README |
-| ------ | ------ |
-| Dropbox | [plugins/dropbox/README.md][PlDb] |
-| GitHub | [plugins/github/README.md][PlGh] |
-| Google Drive | [plugins/googledrive/README.md][PlGd] |
-| OneDrive | [plugins/onedrive/README.md][PlOd] |
-| Medium | [plugins/medium/README.md][PlMe] |
-| Google Analytics | [plugins/googleanalytics/README.md][PlGa] |
-
-## Development
-
-Want to contribute? Great!
-
-Dillinger uses Gulp + Webpack for fast developing.
-Make a change in your file and instantaneously see your updates!
-
-Open your favorite Terminal and run these commands.
-
-First Tab:
-
-```sh
-node app
-```
-
-Second Tab:
-
-```sh
-gulp watch
-```
-
-(optional) Third:
-
-```sh
-karma test
-```
-
-#### Building for source
-
-For production release:
-
-```sh
-gulp build --prod
-```
-
-Generating pre-built zip archives for distribution:
-
-```sh
-gulp build dist --prod
-```
-
-## Docker
-
-Dillinger is very easy to install and deploy in a Docker container.
-
-By default, the Docker will expose port 8080, so change this within the
-Dockerfile if necessary. When ready, simply use the Dockerfile to
-build the image.
-
-```sh
-cd dillinger
-docker build -t <youruser>/dillinger:${package.json.version} .
-```
-
-This will create the dillinger image and pull in the necessary dependencies.
-Be sure to swap out `${package.json.version}` with the actual
-version of Dillinger.
-
-Once done, run the Docker image and map the port to whatever you wish on
-your host. In this example, we simply map port 8000 of the host to
-port 8080 of the Docker (or whatever port was exposed in the Dockerfile):
-
-```sh
-docker run -d -p 8000:8080 --restart=always --cap-add=SYS_ADMIN --name=dillinger <youruser>/dillinger:${package.json.version}
-```
-
-> Note: `--capt-add=SYS-ADMIN` is required for PDF rendering.
-
-Verify the deployment by navigating to your server address in
-your preferred browser.
-
-```sh
-127.0.0.1:8000
-```
 
 ## License
 
 MIT
-
-**Free Software, Hell Yeah!**
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
