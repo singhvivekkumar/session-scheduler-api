@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserCalendar from "./UserCalendar";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
 function fliterEvent(searchEventId, eventList) {
@@ -14,7 +14,7 @@ function fliterEvent(searchEventId, eventList) {
 const UserView = () => {
 	const { id } = useParams();
 	
-	const [currentEvents, setCurrentEvents] = useState();
+	const [currentEvents, setCurrentEvents] = useState("");
 
 	let events;
 
@@ -37,6 +37,13 @@ const UserView = () => {
 			});
 	};
 
+	
+
+	// earlier return
+	if (currentEvents === "") {
+		return null;
+	}
+
 	events = [
 		{
 			id: currentEvents.id,
@@ -46,17 +53,12 @@ const UserView = () => {
 		}
 	];
 
-	// earlier
-	// if () {
-	// 	return null;
-	// }
-
 	return (
 		<>
 			{/* main contianer */}
-			<div className=" flex justify-center items-center h-full bg-slate-100 md:h-screen ">
+			<div className=" flex justify-center items-center h-full  md:h-screen ">
 				{/* container */}
-				<div className=" flex flex-col rounded-md md:w-10/12 lg:w-2/3 h-full md:h-3/4 lg:flex-row p-4 md:py-10 lg:px-10 bg-white shadow-md border space-y-4 border-slate-300 lg:space-x-4 ">
+				<div className=" flex flex-col rounded-md md:w-10/12 lg:w-2/3 h-full md:h-3/4 lg:flex-row p-4 md:py-10 lg:px-10 space-y-4  lg:space-x-4 ">
 					{/* section 1st details side */}
 					<div className=" flex flex-col lg:w-1/3 space-y-2 ">
 						<div className=" space-y-5 ">
@@ -75,8 +77,9 @@ const UserView = () => {
 						</div>
 					</div>
 					{/* section 2nd calendar */}
-					<div className=" flex flex-col justify-center items-center lg:w-2/3">
-						<div className=" w-full h-full lg:w-4/5">
+					<div className=" relative flex flex-col justify-center items-center lg:w-2/3">
+						<h2 className=" text-lg uppercase ">select date</h2>
+						<div className=" w-full lg:w-3/4">
 							{/* <input
 								type="datetime-local"
 								id="meeting-time"
@@ -87,6 +90,8 @@ const UserView = () => {
 							/> */}
 							<UserCalendar events={events} />
 						</div>
+						<Link to={`/singhvivek309/${id}/enter-details`}>
+						<button className=" absolute right-0 top-0 bg-blue-600 p-2 rounded-full active:bg-blue-700 px-4  text-white ">Next</button></Link>
 					</div>
 				</div>
 			</div>

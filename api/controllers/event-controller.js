@@ -48,15 +48,6 @@ const createEvent = async (req, res) => {
 		const { name, summary, location, startDateTime, endDateTime } =
 			req.body;
 
-		// await connectionDatabase();
-		// const user = await findUser(CLIENT_ID);
-		// console.log(user[0].refresh_token);
-
-		// oauth2Client.setCredentials({
-		// 	refresh_token: user[0].refresh_token,
-		// });
-
-		// console.log({refresh_token: refresh_token});
 		await settingTokens();
 
 		const response = await calendar.events.insert({
@@ -74,6 +65,10 @@ const createEvent = async (req, res) => {
 					dateTime: new Date(endDateTime),
 					timeZone: "Asia/Kolkata",
 				},
+				attendees: [
+					{
+					}
+				]
 			},
 		});
 		res.send(response);
@@ -109,11 +104,24 @@ const getEvent = async (req, res) => {
 
 const updateEvent = async (req, res) => {
 	try {
+		const { name, email, comment, eventId} = req.body;
+		// console.log(req)
 		await settingTokens();
-		const response = await calendar.events.list({
+		const response = await calendar.events.patch({
 			auth: oauth2Client,
 			calendarId: "primary",
-			timeZone: "Asia/Kolkata"
+			timeZone: "Asia/Kolkata",
+			eventId: eventId,
+			requestBody: {
+				attendees: [
+					{
+						displayName:name,
+						email: email,
+						comment: comment
+					}
+				]
+			}
+			
 		})
 		// console.log(response.data)
 		res.send(response);	} catch (error) {
@@ -127,7 +135,7 @@ const updateEvent = async (req, res) => {
 };
 
 const deleteEvent = async (req, res) => {
-	try {
+	try { 
 		await settingTokens();
 		const { eventId } = await req.params ;
 		// console.log("params : ", req.params,req);

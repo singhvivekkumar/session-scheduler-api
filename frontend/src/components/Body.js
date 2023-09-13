@@ -7,11 +7,21 @@ import Error from "../Error";
 import CreateEvent from "./consultant/CreateEvent";
 import ViewEvents from "./consultant/ViewEvents";
 import UserView from "./User/UserView";
+import UserBooking from "./User/UserBooking";
+import ConfirmEmail from "./User/ConfirmEmail";
 
 const AppLayout = () => {
 	return (
 		<div>
 			<Header />
+			<Outlet />
+		</div>
+	);
+};
+
+const UserLayout = () => {
+	return (
+		<div>
 			<Outlet />
 		</div>
 	);
@@ -47,9 +57,22 @@ const Body = () => {
 		},
 		{
 			path: "/singhvivek309/:id",
-			element: <UserView/>,
-
-		}
+			element: <UserLayout/>,
+			children: [
+				{
+					path:"/singhvivek309/:id",
+					element: <UserView/>
+				},
+				{
+					path:"/singhvivek309/:id/enter-details",
+					element: <UserBooking/>
+				},
+				{
+					path:"/singhvivek309/:id/booked",
+					element: <ConfirmEmail/>
+				},
+			]
+		},
 	]);
 	return (
 		<div>

@@ -3,21 +3,25 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import axios from "axios";
 import ConfirmEmail from "./ConfirmEmail";
-import { BACKEND_URL } from "../../utils/constant";
+import { BACKEND_URI  } from "../../utils/constant";
+import { useParams } from "react-router-dom";
 
 const UserBooking = () => {
+	const {id} = useParams();
+	console.log("tis is ",id)
 	const [successFull, setSuccessFull] = useState(false);
 
 	const initialValues = {
 		name: "",
 		email: "",
-		summary: ""
+		comment: "",
+		eventId: id
 	};
 
 	const validationSchema = Yup.object().shape({
 		name: Yup.string().min(3, "Too Short!").max(70, "Too Long!").required(),
 		email: Yup.string().email().required(),
-		summary: Yup.string()
+		comment: Yup.string()
 			.min(10, "Too Short!")
 			.max(1000, "Too Long!")
 			.required(),
@@ -26,18 +30,16 @@ const UserBooking = () => {
 	const handleSubmit = (values, helpers) => {
 		console.log("values : ",values)
 		axios
-			.patch(BACKEND_URL+"/api/calendar/update-event", values)
+			.patch(BACKEND_URI+"/api/calendar/update-event", values)
 			.then((response) => {
 				console.log(response.data);
 				setSuccessFull(response.data.status === 200 ? true : false);
 			})
 			.catch((error) => console.log(error.message));
-		console.log(values);
 	};
 
 	return successFull ? <ConfirmEmail/> :(
-		<div>
-			<h2>Enter Details</h2>
+		<div className=" flex justify-center items-center md:pt-10">
 			<Formik
 				initialValues={initialValues}
 				validationSchema={validationSchema}
@@ -46,8 +48,8 @@ const UserBooking = () => {
 					console.log(props);
 					return (
 						<Form>
-							<p className=" text-center m-2 p-2 text-2xl text-blue-600 border-b-2 shadow-sm ">
-								Submit Event Details
+							<p className=" text-center m-2 p-2 text-4xl text-slate-800 border-b-2 shadow-sm font-bold ">
+								Fill the form
 							</p>
 
 							<div className=" flex flex-col md:w-96 justify-start items-baseline space-x-1 mb-5 ">
@@ -88,18 +90,18 @@ const UserBooking = () => {
 
 							<div className=" flex flex-col md:w-96 justify-start items-baseline space-x-1 mb-5">
 								<label
-									htmlFor="summary"
-									className=" bg-slate-600 ">
+									htmlFor="comment"
+									className="">
 									Please share anything that will help prepare for our meeting.
 								</label>
 								<Field
-									name="summary"
+									name="comment"
 									as="textarea"
-									placeholder="Enter Summary "
+									placeholder="Enter comment "
 									className=" border-2 h-24 md:w-11/12 border-blue-500 rounded-md  focus:outline-none p-1 md:px-2 "
 								/>
 								<ErrorMessage
-									name="summary"
+									name="comment"
 									component="p"
 									className=" text-sm italic text-red-600  "
 								/>
