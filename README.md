@@ -16,6 +16,8 @@ An appointment scheduling system is a web application that allows users to book 
 - Admin can schedule a new event according to their availability.
 - Admin can restrict user to book appointment .
 - Admin can view list all events in their primary google calendar.
+- Admin can generate link for sharing the event to their client.
+- Admin can also delete the event from events list.
 - Admin receive email when new appointment is scheduled and also get notificaiton remainder before an appointment.
 
 ### User (Client)
@@ -28,18 +30,18 @@ An appointment scheduling system is a web application that allows users to book 
 ## Tech
 
 Tech stack which followed in this project:
-- [React.js]() - UI library for frontend management
-- [node.js] - evented I/O for the backend
-- [Express] - fast node.js network app 
-- [Mongodb]() - database to store tokens.
+- [react] - UI library for frontend management
+- [nodejs] - evented I/O for the backend
+- [express] - fast node.js network app 
+- [mongodb] - database to store tokens.
 - 
 Tools which followed in this project:
-- [VS code]() - Source code editor for debugging, snippets and code refactoring.
-- [git]() - for version control system
-- [Google Developer Console]()-  for Create Credentials 
+- [vs code] - Source code editor for debugging, snippets and code refactoring.
+- [git] - for version control system
+- [Google Developer Console](https://console.cloud.google.com)-  for Create Credentials 
 
 ## GET STARTED
-You need the back-end server for this app to work. You can find the intructions to setup back-end server locally here.
+You need the front-end and back-end server for this app to work. You can find the intructions to setup servers locally here.
 ### Modules
 - **Installation**: You need to need clone this `repo` to run local machine.
 - **Setup the Google Developer Console**: main module to interact with Google Calendar API that provides an abstraction with business logic.
@@ -54,24 +56,13 @@ You need the back-end server for this app to work. You can find the intructions 
     git clone https://github.com/singhvivekkumar/session-scheduler.git
     ```
 
-3. Start local server
-
-    ```sh
-    REACT_APP_BASE_URL=http://localhost:3001 npm start
-    ```
-
-    Please note that only `npm start` won't work as this app relies on this environment variable.
-
-4. Visit `http://localhost:3000/` in your browser.
-
-
 ### Setup the Google Cloud Project
 1. Go to [Google Developer Console](https://console.cloud.google.com/apis)
 2. Sign in and create an Google Project 
 3. Click on `CREATE PROJECT` then Enter the Name of project and click `CREATE`
 4. Go to hamburger menu and click on `API and Services`
-3. Enable the [Google Calendar API](https://console.cloud.google.com/apis/api/calendar-json.googleapis.com)
-4. Please set up a Google [OAuth consent screen](https://developers.google.com/workspace/marketplace/configure-oauth-consent-screen#:~:text=The%20OAuth%20consent%20screen%20is,allowing%20your%20app%20to%20access.)
+5. Enable the [Google Calendar API](https://console.cloud.google.com/apis/api/calendar-json.googleapis.com)
+6. Please set up a Google [OAuth consent screen](https://developers.google.com/workspace/marketplace/configure-oauth-consent-screen#:~:text=The%20OAuth%20consent%20screen%20is,allowing%20your%20app%20to%20access.)
     1. Select the project that you want to use for your OAuth consent screen.
     7. Select the User type for your app.
         - Internal means that your app will only be used by users within your organization.
@@ -92,23 +83,23 @@ You need the back-end server for this app to work. You can find the intructions 
     15. In the Test users section, you can add test users for your app.
     16. Test users are real users who can test your app and give you feedback.
     17. Click Save and continue.
-1. Create an OAuth Client ID
+7. Create an OAuth Client ID
     1. Go to [Credentials](https://console.cloud.google.com/apis/credentials)
-    1. Choose *Create Credentials* and pick *OAuth Client ID*
-    1. Pick *Web Application*
-    2. In 
-    1. In **Authorized JavaScript origins** section add this for dev localhost server:
+    2. Choose *Create Credentials* and pick *OAuth Client ID*
+    3. Pick *Web Application*
+    4. In **Authorized JavaScript origins** section add this for dev localhost server:
         - `http://localhost:3000` for frontend server.
-    1. In **Authorized redirect URIs** section add this for dev localhost server:
+    5. In **Authorized redirect URIs** section add this for dev localhost server:
         - `http://localhost:3002/api/calendar/redirect` for backend dev server
         - *(your production servers here)*
-    1. Confirm it. You can let *allowed redirect URIs* empty. We will be using Google's own sign in.
-    1. Take note of your **OAuth Client ID**
-    1. Store the Client Id *(one of)*:
+    6. Confirm it. You can let *allowed redirect URIs* empty. We will be using Google's own sign in.
+    7. Take note of your **OAuth Client ID**
+    8. Store the Client credentials:
         - Set an Environment Variable called `CLIENT_ID` with the value
         - Set an Environment Variable called `CLIENT_SECRET` with the value
         - Set an Environment Variable called `REDIRECT_URL` with the value
         - Save it on `.env` file.
+
 ### Setup MongoDB
 1. Create a MongoDB Atlas account. You can create an account for free at https://www.mongodb.com/cloud/atlas/signup.
 2. Create a cluster. A cluster is a group of MongoDB servers that work together to provide high availability and scalability. You can create a cluster in the MongoDB Atlas console.
@@ -116,18 +107,7 @@ You need the back-end server for this app to work. You can find the intructions 
 4. Setup mongoDB with express js [visit](https://www.mongodb.com/languages/express-mongodb-rest-api-tutorial)
 
 If succeed, you should see something like this at http://localhost:3002/api/calendar:
-```json
-[
-  {
-    "id": "fsltp4vi7lcgugho31rdlc56no@group.calendar.google.com",
-    "name": "Beneficios (prueba)",
-    "description": "Calendario de prueba para la app de citas",
-    "foregroundColor": "#000000",
-    "backgroundColor": "#a47ae2",
-    "available": true
-  }
-]
-```
+- You redireact on event list page of frontend with all events
 
 I encourge you to create new calendars from https://calendar.google.com and add some test events on it!
 
@@ -175,9 +155,8 @@ Once running:
 Once running, visit http://localhost:3000/ to open the app
 
 Note: it may take a while to build, basically because it need to build and bundle the *frontend* module as well.
-.
 
-> Note:
+> Note: This `APP` is not is production ready.
 
 
 ## License
@@ -186,19 +165,16 @@ MIT
 
 [//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
 
-   [dill]: <https://github.com/joemccann/dillinger>
-   [git-repo-url]: <https://github.com/joemccann/dillinger.git>
    [john gruber]: <http://daringfireball.net>
    [df1]: <http://daringfireball.net/projects/markdown/>
    [markdown-it]: <https://github.com/markdown-it/markdown-it>
    [Ace Editor]: <http://ace.ajax.org>
-   [node.js]: <http://nodejs.org>
-   [Twitter Bootstrap]: <http://twitter.github.com/bootstrap/>
-   [jQuery]: <http://jquery.com>
-   [@tjholowaychuk]: <http://twitter.com/tjholowaychuk>
+   [nodejs]: <http://nodejs.org>
    [express]: <http://expressjs.com>
-   [AngularJS]: <http://angularjs.org>
-   [Gulp]: <http://gulpjs.com>
+   [react]: <https://react.dev/>
+   [mongoDB]: <https://www.mongodb.com/>
+   [git]: <https://git-scm.com/>
+   [vs code]: <https://code.visualstudio.com/>
 
    [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
    [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
