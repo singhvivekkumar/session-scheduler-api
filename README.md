@@ -30,15 +30,15 @@ An appointment scheduling system is a web application that allows users to book 
 ## Tech
 
 Tech stack which followed in this project:
-- [react] - UI library for frontend management
-- [nodejs] - evented I/O for the backend
-- [express] - fast node.js network app 
-- [mongodb] - database to store tokens.
+- [React.js]() - UI library for frontend management
+- [node.js] - evented I/O for the backend
+- [Express] - fast node.js network app 
+- [Mongodb]() - database to store tokens.
 - 
 Tools which followed in this project:
-- [vs code] - Source code editor for debugging, snippets and code refactoring.
-- [git] - for version control system
-- [Google Developer Console](https://console.cloud.google.com)-  for Create Credentials 
+- [VS code]() - Source code editor for debugging, snippets and code refactoring.
+- [git]() - for version control system
+- [Google Developer Console]()-  for Create Credentials 
 
 ## GET STARTED
 You need the front-end and back-end server for this app to work. You can find the intructions to setup servers locally here.
@@ -123,7 +123,7 @@ I encourge you to create new calendars from https://calendar.google.com and add 
     CLIENT_ID= <YOUR_GOOGLE_CLIENT_ID>  
     CLIENT_SECRET=<YOUR_GOOGLE_SECRET_ID>
     REDIRECT_URL=http://localhost:3002/api/calendar/redirect
-    API_KEY=A<YOUR_GOOGLE_API_KEY>
+    API_KEY=<YOUR_GOOGLE_API_KEY>
     MONGODB_URI="mongodb+srv://<YOUR_MONDODB_USER_ID>:<YOUR_MONGODB_PASSWORD>@cluster0.gjor0co.mongodb.net/?retryWrites=true&w=majority"
 
     ```
@@ -152,7 +152,7 @@ Once running:
     ```sh
     npm start
     ```
-Once running, visit http://localhost:3000/ to open the app
+Once running, visit http://localhost:3000 to open the app
 
 Note: it may take a while to build, basically because it need to build and bundle the *frontend* module as well.
 
@@ -169,12 +169,8 @@ MIT
    [df1]: <http://daringfireball.net/projects/markdown/>
    [markdown-it]: <https://github.com/markdown-it/markdown-it>
    [Ace Editor]: <http://ace.ajax.org>
-   [nodejs]: <http://nodejs.org>
+   [node.js]: <http://nodejs.org>
    [express]: <http://expressjs.com>
-   [react]: <https://react.dev/>
-   [mongoDB]: <https://www.mongodb.com/>
-   [git]: <https://git-scm.com/>
-   [vs code]: <https://code.visualstudio.com/>
 
    [PlDb]: <https://github.com/joemccann/dillinger/tree/master/plugins/dropbox/README.md>
    [PlGh]: <https://github.com/joemccann/dillinger/tree/master/plugins/github/README.md>
