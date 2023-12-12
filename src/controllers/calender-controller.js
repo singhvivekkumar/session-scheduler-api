@@ -12,15 +12,21 @@ const scopes = [
 	'https://www.googleapis.com/auth/calendar'
 ]
 
-const getCalender = async (req, res) => {
+const getUrl = async (req, res) => {
 	try {
 		const url = await oauth2Client.generateAuthUrl({
 			access_type: "offline",
 			scope: scopes,
 		});
+		return res.status(200).json({
+			data: {
+				url: url
+			},
+			success: true,
+			message: "successfully OAuth is generated",
+			err: {}
+		});
 
-
-		return res.send(url);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({
@@ -34,6 +40,6 @@ const getCalender = async (req, res) => {
 
 
 module.exports = {
-	getCalender,
+	getUrl,
 	oauth2Client
 }

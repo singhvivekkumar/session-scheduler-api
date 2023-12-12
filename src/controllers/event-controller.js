@@ -45,9 +45,7 @@ const calendar = google.calendar({
 
 const createEvent = async (req, res) => {
 	try {
-		const { name, summary, location, startDateTime, endDateTime } =
-			req.body;
-
+		const { name, summary, location, startDateTime, endDateTime } = req.body;
 		await settingTokens();
 
 		const response = await calendar.events.insert({
@@ -65,16 +63,12 @@ const createEvent = async (req, res) => {
 					dateTime: new Date(endDateTime),
 					timeZone: "Asia/Kolkata",
 				},
-				attendees: [
-					{
-					}
-				]
 			},
 		});
-		res.send(response);
+		return res.status(201).json(response);
 	} catch (error) {
 		console.log(error);
-		res.send({
+		return res.status(500).send({
 			success: false,
 			message: "problem event controller",
 			error: error,

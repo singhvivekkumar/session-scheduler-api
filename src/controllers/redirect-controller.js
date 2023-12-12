@@ -1,3 +1,4 @@
+const { FRONTEND_URL } = require('../config/server-config');
 const { connectionDatabase } = require('../db');
 const { dataSaver } = require('../models/events');
 const { oauth2Client } = require('./calender-controller');
@@ -16,10 +17,10 @@ const redirectURI = async ( req, res) => {
 		connectionDatabase();
 		dataSaver(clientId, REFRESH_TOKEN)
 		
-		res.redirect('http://localhost:3000/main')
+		res.status(301).redirect(`${FRONTEND_URL}/main`)
 	} catch (error) {
 		console.log("something went wrong in redirecting phase",req)
-		return res.send(error)
+		return res.status(500).send(error)
 	}
 }
 

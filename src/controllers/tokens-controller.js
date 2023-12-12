@@ -1,4 +1,3 @@
-// const = require('')
 
 const createToken = async (req, res, next) => { 
 	try {
