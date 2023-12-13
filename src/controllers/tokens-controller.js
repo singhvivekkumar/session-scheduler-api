@@ -1,3 +1,6 @@
+const { TokenService } = require("../services");
+
+const tokenService = new TokenService();
 
 const createToken = async (req, res, next) => { 
 	try {
