@@ -16,6 +16,7 @@ const StartServer = async () => {
 
 	//connect ot database
 	await connectionDatabase();
+  console.log("hello");
 
 	app.use("/api", apiRoutes);
 

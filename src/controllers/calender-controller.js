@@ -5,7 +5,7 @@ const calendarService = new CalendarService();
 const getUrl = async (req, res) => {
 	try {
 		const authUrl = await calendarService.getAuthUrl();
-		return res.status(201).json({
+		return res.status(200).json({
 			data: authUrl,
 			success: true,
 			message: "successfully OAuth is generated",
@@ -22,6 +22,22 @@ const getUrl = async (req, res) => {
 	}
 };
 
+const getRedirectUrl = async (req, res) => {
+	try {
+		const mainPage = await calendarService.redirectUrl(req.query);
+		return res.redirect(mainPage);
+	} catch (error) {
+		console.log(error);
+		return res.status(500).json({
+			data: {},
+			success: false,
+			message: "Something went wrong while redirecting client",
+			err: error,
+		});
+	}
+};
+
 module.exports = {
 	getUrl,
+	getRedirectUrl,
 };

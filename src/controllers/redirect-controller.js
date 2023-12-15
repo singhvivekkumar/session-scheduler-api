@@ -11,7 +11,7 @@ const redirectURI = async ( req, res) => {
 		const { tokens } = await oauth2Client.getToken(code);
 		oauth2Client.setCredentials(tokens);
 		REFRESH_TOKEN = tokens.refresh_token;
-		console.log(REFRESH_TOKEN, clientId);
+		console.log(token,"clientId", clientId);
 
 		// database work
 		connectionDatabase();

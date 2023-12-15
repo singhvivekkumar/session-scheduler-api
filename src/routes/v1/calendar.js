@@ -3,14 +3,12 @@ const express = require("express");
 const {
 	calendarController,
 	eventsController,
-	redirectController,
 	tokenController,
 } = require("../../controllers/index");
 
 const router = express.Router();
 
-router.get("/", calendarController.getUrl);
-router.get("/redirect", redirectController.redirectURI);
+router.get("/redirect", calendarController.getRedirectUrl);
 router.post("/create-event", eventsController.create);
 router.get("/create-tokens", tokenController.createToken);
 router.get("/list-event", eventsController.get);

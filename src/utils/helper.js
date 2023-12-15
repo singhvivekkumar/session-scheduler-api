@@ -1,5 +1,7 @@
 const { google } = require("googleapis");
-const { findUser } = require("../models/events");
+
+const { TokenService } = require("../services/index");
+
 const {
 	CLIENT_ID,
 	CLIENT_SECRET,
@@ -13,8 +15,9 @@ const oauth2Client = new google.auth.OAuth2(
 	REDIRECT_URL
 );
 
-const settingCredentials = async () => {
-	const user = await findUser(CLIENT_ID);
+const settingCredentials = async (clientId) => {
+	const tokenService = new TokenService();
+	const user = await tokenService.getToken(clientId);
 	// console.log(user[0].refresh_token);
 
 	oauth2Client.setCredentials({
