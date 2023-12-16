@@ -1,6 +1,7 @@
 const TokenService = require("./token-serivce");
 const { oauth2Client } = require("../utils/helper");
 const { FRONTEND_URL } = require("../config/server-config");
+const axios = require('axios');
 
 const scopes = [
 	"https://www.googleapis.com/auth/calendar",
@@ -27,17 +28,19 @@ class CalendarService {
 		}
 	}
 
-	async redirectUrl(data) {
+	async redirectUrl(client) {
 		try {
-			const code = await data.code;
-			const clientId = oauth2Client._clientId;
+			const code = await client.code;
 			const { tokens } = await oauth2Client.getToken(code);
-			oauth2Client.setCredentials(tokens);
-			console.log(tokens, "clientId", clientId);
+			const { data } = await axios.get(
+				"https://www.googleapis.com/oauth2/v1/userinfo",
+				{headers: { Authorization: `Bearer ${tokens.access_token}` },}
+			);
+			console.log(data);
 
-			await this.tokenService.setToken(clientId, tokens);
+			await this.tokenService.setToken(data, tokens);
 
-			return `${FRONTEND_URL}/main`;
+			return `${FRONTEND_URL}/main/${encodeURIComponent(data.id)}`;
 		} catch (error) {
 			console.log(
 				"something went wrong in redirectUrl() of calendar service"

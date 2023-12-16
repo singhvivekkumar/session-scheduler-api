@@ -5,10 +5,10 @@ class TokenService {
 		this.tokenRepository = new TokenRepository();
 	}
 
-	async setToken(clientId, tokens) {
+	async setToken(userData, tokens) {
 		try {
 			const token = await this.tokenRepository.createToken(
-				clientId,
+				userData,
 				tokens
 			);
 			return token;
@@ -18,9 +18,9 @@ class TokenService {
 		}
 	}
 
-	async getUser(clientId) {
+	async getUserToken(userId) {
 		try {
-			const token = await this.tokenRepository.getToken(clientId);
+			const token = await this.tokenRepository.getToken(userId);
 			return token;
 		} catch (error) {
 			console.log("Error while getting tokens from service layer");

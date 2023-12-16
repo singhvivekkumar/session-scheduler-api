@@ -1,6 +1,12 @@
-const { oauth2Client, settingCredentials, calendar } = require("../utils/helper");
+const { API_KEY } = require("../config/server-config");
+const { oauth2Client, calendar } = require("../utils/helper");
+const TokenService = require("./token-serivce");
 
 class EventService {
+	
+	constructor() {
+		this.tokenService = new TokenService();
+  }
 
 	async createEvent(data) {
 		try {
@@ -35,18 +41,22 @@ class EventService {
 		}
 	}
 
-	async getEvent() {
+	async getEvent(id) {
 		try {
-			await settingCredentials();
-			const response = await calendar.events.list({
+			console.log("id--------- :",id);
+			const tokens = await this.tokenService.getUserToken(id);
+			oauth2Client.setCredentials(tokens);
+			const events = await calendar.events.list({
 				auth: oauth2Client,
 				calendarId: "primary",
-				timeZone: "Asia/Kolkata",
-			});
-			return response;
+				key: API_KEY,
+			})
+			console.log(events);
+			return events;
 		} catch (error) {
 			console.log(
-				"something happen wrong in getEvent() of event-service"
+				"something happen wrong in getEvent() of event-service",
+				error
 			);
 			throw error;
 		}

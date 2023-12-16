@@ -1,14 +1,16 @@
 const UserDetails = require("../models/events");
 
 class TokenRepository {
-	async createToken(clientId, tokens) {
+	async createToken(data, tokens) {
 		try {
 			// Create a new document
 			const user = new UserDetails({
-				clientId: clientId,
+				user_id: data.id,
+				name: data.name,
+				picture: data.picture,
 				refresh_token: tokens.refresh_token,
 				access_token: tokens.access_token,
-				expiry_date: tokens.expiry_date,
+				expiry_date: new Date(tokens.expiry_date),
 				scope: tokens.scope,
 				token_type: tokens.token_type,
 			});
@@ -24,11 +26,10 @@ class TokenRepository {
 		}
 	}
 
-	async getToken(clientId) {
+	async getToken(userId) {
 		try {
-			const result = await UserDetails.find({
-				clientId: clientId,
-			});
+			const result = await UserDetails.findOne({user_id: userId}).exec();
+			console.log("respo",result)
 			return result;
 		} catch (error) {
 			console.log("error in dataSaver() of repository");

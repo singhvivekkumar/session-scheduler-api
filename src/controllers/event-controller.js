@@ -32,19 +32,21 @@ const create = async (req, res) => {
 
 const get = async (req, res) => {
 	try {
-		const events = await eventService.getEvent();
+		console.log(req.query);
+		const events = await eventService.getEvent(req.query.id);
+		console.log("controller ........",events.data);
 		return res.status(200).json({
-			data: events,
+			data: events.data,
+			message: "list of all events",
+			success: true,
+			err: {},
+		});
+	} catch (error) {
+		return res.status(500).json({
+			data: {},
 			message: "list of all events",
 			success: true,
 			err: error,
-		});
-	} catch (error) {
-		res.send({
-			data: {},
-			success: false,
-			message: "problem get() controller",
-			error: error,
 		});
 	}
 };
