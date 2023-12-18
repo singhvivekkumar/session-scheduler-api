@@ -6,12 +6,14 @@ const create = async (req, res) => {
 	try {
 		const { name, summary, location, startDateTime, endDateTime } =
 			req.body;
+		const { id } = req.query;
 		const event = await eventService.createEvent({
 			name,
 			summary,
 			location,
 			startDateTime,
 			endDateTime,
+			id
 		});
 		return res.status(201).json({
 			data: event,

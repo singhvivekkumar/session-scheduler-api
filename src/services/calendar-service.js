@@ -40,7 +40,7 @@ class CalendarService {
 
 			await this.tokenService.setToken(data, tokens);
 
-			return `${FRONTEND_URL}/main/${encodeURIComponent(data.id)}`;
+			return {url: `${FRONTEND_URL}/${encodeURIComponent(data.id)}/list-events`, tokens};
 		} catch (error) {
 			console.log(
 				"something went wrong in redirectUrl() of calendar service"

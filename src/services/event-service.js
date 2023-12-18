@@ -10,10 +10,11 @@ class EventService {
 
 	async createEvent(data) {
 		try {
-			const { name, summary, location, startDateTime, endDateTime } =
+			const { name, summary, location, startDateTime, endDateTime, id } =
 				data;
+			const tokens = await this.tokenService.getUserToken(id);
+			oauth2Client.setCredentials(tokens);
 			console.log(name, summary, startDateTime);
-			await settingCredentials();
 
 			const event = await calendar.events.insert({
 				auth: oauth2Client,
@@ -43,7 +44,6 @@ class EventService {
 
 	async getEvent(id) {
 		try {
-			console.log("id--------- :",id);
 			const tokens = await this.tokenService.getUserToken(id);
 			oauth2Client.setCredentials(tokens);
 			const events = await calendar.events.list({
@@ -51,7 +51,6 @@ class EventService {
 				calendarId: "primary",
 				key: API_KEY,
 			})
-			console.log(events);
 			return events;
 		} catch (error) {
 			console.log(
@@ -65,7 +64,8 @@ class EventService {
 	async updateEvent(data) {
 		try {
 			const { name, email, comment, eventId } = data;
-			await settingCredentials();
+			const tokens = await this.tokenService.getUserToken(id);
+			oauth2Client.setCredentials(tokens);
 			const response = await calendar.events.patch({
 				auth: oauth2Client,
 				calendarId: "primary",
@@ -92,7 +92,8 @@ class EventService {
 
 	async deleteEvent(eventId) {
 		try {
-			await settingCredentials();
+			const tokens = await this.tokenService.getUserToken(id);
+			oauth2Client.setCredentials(tokens);
 			const response = await calendar.events.delete({
 				auth: oauth2Client,
 				calendarId: "primary",

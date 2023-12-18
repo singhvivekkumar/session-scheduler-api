@@ -1,4 +1,5 @@
 const { TokenRepository } = require("../repository/index");
+const { oauth2Client } = require("../utils/helper");
 
 class TokenService {
 	constructor() {
@@ -7,6 +8,7 @@ class TokenService {
 
 	async setToken(userData, tokens) {
 		try {
+			oauth2Client.setCredentials(tokens);
 			const token = await this.tokenRepository.createToken(
 				userData,
 				tokens
@@ -20,8 +22,8 @@ class TokenService {
 
 	async getUserToken(userId) {
 		try {
-			const token = await this.tokenRepository.getToken(userId);
-			return token;
+			const user = await this.tokenRepository.getToken(userId);
+			return user;
 		} catch (error) {
 			console.log("Error while getting tokens from service layer");
 			throw error;

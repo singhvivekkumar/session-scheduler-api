@@ -25,7 +25,9 @@ const getUrl = async (req, res) => {
 const getRedirectUrl = async (req, res) => {
 	try {
 		const mainPage = await calendarService.redirectUrl(req.query);
-		return res.redirect(mainPage);
+		res.cookie("access_token",mainPage.tokens.access_token, { httpOnly: true })
+		res.cookie("refresh_token",mainPage.tokens.refresh_token, { httpOnly: true })
+		return res.redirect(mainPage.url);
 	} catch (error) {
 		console.log(error);
 		return res.status(500).json({
