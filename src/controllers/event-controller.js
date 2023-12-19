@@ -16,7 +16,7 @@ const create = async (req, res) => {
 			id
 		});
 		return res.status(201).json({
-			data: event,
+			data: event.data,
 			message: "Event successfully created",
 			success: true,
 			err: {},
@@ -34,9 +34,9 @@ const create = async (req, res) => {
 
 const get = async (req, res) => {
 	try {
-		console.log(req.query);
+		// console.log(req.query);
 		const events = await eventService.getEvent(req.query.id);
-		console.log("controller ........",events.data);
+		// console.log("controller ........",events.data);
 		return res.status(200).json({
 			data: events.data,
 			message: "list of all events",
@@ -56,23 +56,25 @@ const get = async (req, res) => {
 const update = async (req, res) => {
 	try {
 		const { name, email, comment, eventId } = req.body;
+		const { id } = req.query;
 		const response = await eventService.updateEvent({
 			name,
 			email,
 			comment,
 			eventId,
+			id
 		});
 		return res.status(200).json({
 			data: response,
-			message: "Update an event",
+			message: "event updated successfully",
 			success: true,
-			err: error,
+			err: {},
 		});
 	} catch (error) {
 		return res.status(500).json({
 			data: {},
-			message: "Event successfully created",
-			success: true,
+			message: "Can't update your data in event",
+			success: false,
 			err: error,
 		});
 	}
@@ -81,18 +83,19 @@ const update = async (req, res) => {
 const deleteE = async (req, res) => {
 	try {
 		const { eventId } = await req.params;
-		const response = await eventService.deleteEvent(eventId);
-		return res.status(500).json({
+		const { id } = await req.query;
+		const response = await eventService.deleteEvent({eventId, id});
+		return res.status(200).json({
 			data: response,
-			message: "Not able to create an event",
-			success: false,
-			err: error,
+			message: "Event is deleted successfully",
+			success: true,
+			err: {},
 		});
 	} catch (error) {
 		return res.status(500).json({
 			data: {},
-			message: "Event successfully deleted",
-			success: true,
+			message: "Event is not deleted",
+			success: false,
 			err: error,
 		});
 	}

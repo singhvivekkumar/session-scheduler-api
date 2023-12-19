@@ -3,10 +3,9 @@ const { oauth2Client, calendar } = require("../utils/helper");
 const TokenService = require("./token-serivce");
 
 class EventService {
-	
 	constructor() {
 		this.tokenService = new TokenService();
-  }
+	}
 
 	async createEvent(data) {
 		try {
@@ -50,7 +49,7 @@ class EventService {
 				auth: oauth2Client,
 				calendarId: "primary",
 				key: API_KEY,
-			})
+			});
 			return events;
 		} catch (error) {
 			console.log(
@@ -63,7 +62,7 @@ class EventService {
 
 	async updateEvent(data) {
 		try {
-			const { name, email, comment, eventId } = data;
+			const { name, email, comment, eventId, id } = data;
 			const tokens = await this.tokenService.getUserToken(id);
 			oauth2Client.setCredentials(tokens);
 			const response = await calendar.events.patch({
@@ -90,8 +89,9 @@ class EventService {
 		}
 	}
 
-	async deleteEvent(eventId) {
+	async deleteEvent(data) {
 		try {
+			const { id, eventId } = data;
 			const tokens = await this.tokenService.getUserToken(id);
 			oauth2Client.setCredentials(tokens);
 			const response = await calendar.events.delete({
@@ -99,7 +99,7 @@ class EventService {
 				calendarId: "primary",
 				eventId: eventId,
 			});
-			return response;
+			return response.data;
 		} catch (error) {
 			console.log(
 				"something happen wrong in deleteEvent() of event-service"
