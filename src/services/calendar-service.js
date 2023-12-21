@@ -1,7 +1,9 @@
+const axios = require('axios');
+
 const TokenService = require("./token-serivce");
 const { oauth2Client } = require("../utils/helper");
 const { FRONTEND_URL } = require("../config/server-config");
-const axios = require('axios');
+const { GOOGLE_API } = require("../utils/constant");
 
 const scopes = [
 	"https://www.googleapis.com/auth/calendar",
@@ -33,12 +35,12 @@ class CalendarService {
 			const code = await client.code;
 			const { tokens } = await oauth2Client.getToken(code);
 			const { data } = await axios.get(
-				"https://www.googleapis.com/oauth2/v1/userinfo",
+				GOOGLE_API,
 				{headers: { Authorization: `Bearer ${tokens.access_token}` },}
 			);
 			console.log(data);
 
-			await this.tokenService.setToken(data, tokens);
+			await this.tokenService.setUserToken(data, tokens);
 
 			return {url: `${FRONTEND_URL}/${encodeURIComponent(data.id)}/list-events`, tokens};
 		} catch (error) {

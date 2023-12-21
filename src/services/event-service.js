@@ -80,7 +80,7 @@ class EventService {
 					],
 				},
 			});
-			return response;
+			return response.data;
 		} catch (error) {
 			console.log(
 				"something happen wrong in updateEvent() of event-service"

@@ -46,7 +46,7 @@ const get = async (req, res) => {
 	} catch (error) {
 		return res.status(500).json({
 			data: {},
-			message: "list of all events",
+			message: "Not able to show list of events",
 			success: true,
 			err: error,
 		});

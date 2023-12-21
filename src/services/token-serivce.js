@@ -6,13 +6,19 @@ class TokenService {
 		this.tokenRepository = new TokenRepository();
 	}
 
-	async setToken(userData, tokens) {
+	async setUserToken(userData, tokens) {
 		try {
-			oauth2Client.setCredentials(tokens);
-			const token = await this.tokenRepository.createToken(
-				userData,
-				tokens
-			);
+			const flag = await this.getUserToken(userData.id);
+			if (!flag) {
+				console.log("set the tokens");
+				const token = await this.tokenRepository.createToken(
+					userData,
+					tokens
+				);
+				return token;
+			}
+			console.log("update the tokens");
+			const token = await this.updateUserToken(flag.user_id, tokens);
 			return token;
 		} catch (error) {
 			console.log("Error while setting tokens in service layer");
@@ -26,6 +32,16 @@ class TokenService {
 			return user;
 		} catch (error) {
 			console.log("Error while getting tokens from service layer");
+			throw error;
+		}
+	}
+
+	async updateUserToken(userId, tokens) {
+		try {
+			const user = await this.tokenRepository.updateToken(userId, tokens);
+			return user;
+		} catch (error) {
+			console.log("Error while updating tokens from service layer");
 			throw error;
 		}
 	}

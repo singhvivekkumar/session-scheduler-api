@@ -1,3 +1,4 @@
+const { FRONTEND_URL } = require("../config/server-config");
 const { CalendarService } = require("../services");
 
 const calendarService = new CalendarService();
@@ -30,12 +31,7 @@ const getRedirectUrl = async (req, res) => {
 		return res.redirect(mainPage.url);
 	} catch (error) {
 		console.log(error);
-		return res.status(500).json({
-			data: {},
-			success: false,
-			message: "Something went wrong while redirecting client",
-			err: error,
-		});
+		return res.status(500).redirect(FRONTEND_URL);
 	}
 };
 
