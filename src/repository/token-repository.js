@@ -17,7 +17,7 @@ class TokenRepository {
 
 			// Add the document to Collections
 			await user.save().then(
-				(data) => console.log("One entry added :", data),
+				(data) => console.log("New user is added to database :", data),
 				(err) => console.log(err)
 			);
 		} catch (error) {
@@ -41,15 +41,16 @@ class TokenRepository {
 
 	async updateToken(userId, tokens) {
 		try {
-			const query = { user_id: userId };
-			const newTokens = {
+			const fliter = { user_id: userId };
+			const updatedTokens = {
 				$set: {
 					refresh_token: tokens.refresh_token,
 					access_token: tokens.access_token,
 					expiry_date: new Date(tokens.expiry_date),
 				},
 			};
-			const result = await UserDetails.updateOne(query, newTokens);
+			console.log("update with new tokens data of existing user :", fliter, updatedTokens);
+			const result = await UserDetails.updateOne(fliter, updatedTokens);
 			return result;
 		} catch (error) {
 			console.log("error in updateToken() of repository");

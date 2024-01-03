@@ -10,14 +10,14 @@ class TokenService {
 		try {
 			const flag = await this.getUserToken(userData.id);
 			if (!flag) {
-				console.log("set the tokens");
+				console.log("setting first time new token tokens for user :", userData);
 				const token = await this.tokenRepository.createToken(
 					userData,
 					tokens
 				);
 				return token;
 			}
-			console.log("update the tokens");
+			console.log("updated exiting user's tokens to mongodb database");
 			const token = await this.updateUserToken(flag.user_id, tokens);
 			return token;
 		} catch (error) {

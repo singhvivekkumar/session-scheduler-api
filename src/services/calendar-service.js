@@ -30,9 +30,10 @@ class CalendarService {
 		}
 	}
 
-	async redirectUrl(client) {
+	async redirectUrl(query) {
 		try {
-			const code = await client.code;
+			const code = await query.code;
+			console.log("code", code)
 			const { tokens } = await oauth2Client.getToken(code);
 			const { data } = await axios.get(
 				GOOGLE_API,
